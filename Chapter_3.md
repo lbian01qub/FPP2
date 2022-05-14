@@ -1,10 +1,10 @@
 
-Forecasting: Principles and Practice - Chapter 3
-------------------------------------------------
+## Forecasting: Principles and Practice - Chapter 3
 
 ### Exercise 1
 
-For the following series, find an appropriate Box-Cox transformation in order to stabilise the variance.
+For the following series, find an appropriate Box-Cox transformation in
+order to stabilise the variance.
 
 -   `usnetelec`
 -   `usgdp`
@@ -39,7 +39,8 @@ cbind(raw = enplanements, transform = BoxCox(enplanements, lambda)) %>%
 
 Why is a Box-Cox transformation unhelpful for the cangas data?
 
--   A Box-Cox transformation is not useful for `cangas` because the variation in the seasonality does not change much in the raw data
+-   A Box-Cox transformation is not useful for `cangas` because the
+    variation in the seasonality does not change much in the raw data
 
 ``` r
 lambda <- BoxCox.lambda(cangas)
@@ -48,11 +49,12 @@ cbind(raw = cangas, transform = BoxCox(cangas, lambda)) %>%
    ggtitle("Monthly Canadian Gas Production")
 ```
 
-![](Figures/Ch3/Ch3-Exercise_2-1.png)
+![](Figures/Ch3/Ch3-Exercise_2-1.png)<!-- -->
 
 ### Exercise 3
 
-What Box-Cox transformation would you select for your retail data (from Exercise 3 in Section 2.10)?
+What Box-Cox transformation would you select for your retail data (from
+Exercise 3 in Section 2.10)?
 
 -   A lambda of .1276 transforms the seasonality nicely.
 
@@ -64,15 +66,19 @@ cbind(raw = myts, transform = BoxCox(myts, lambda)) %>%
    autoplot(facets = TRUE)
 ```
 
-![](Figures/Ch3/Ch3-Exercise_3-1.png)
+![](Figures/Ch3/Ch3-Exercise_3-1.png)<!-- -->
 
 ### Exercise 4
 
-For each of the following series, make a graph of the data. If transforming seems appropriate, do so and describe the effect. `dole`, `usdeaths`, `bricksq`.
+For each of the following series, make a graph of the data. If
+transforming seems appropriate, do so and describe the effect. `dole`,
+`usdeaths`, `bricksq`.
 
 -   `dole`: Box-Cox transformation with lambda = .33
--   `usdeaths`: no transformation applied (transformation appears meaningless)
--   `bricksq`: no transformation applied (transformation appears meaningless)
+-   `usdeaths`: no transformation applied (transformation appears
+    meaningless)
+-   `bricksq`: no transformation applied (transformation appears
+    meaningless)
 
 ``` r
 autoplot(dole)
@@ -87,9 +93,14 @@ autoplot(bricksq)
 
 ### Exercise 5
 
-Calculate the residuals from a seasonal naïve forecast applied to the quarterly Australian beer production data from 1992. The following code will help.
+Calculate the residuals from a seasonal naïve forecast applied to the
+quarterly Australian beer production data from 1992. The following code
+will help.
 
--   The residuals seem to have a right skew. Autocorrelation is also present in the residuals as seen in the ACF and supported by the Ljung-Box Test's p-value of 8.3e-05, which rejects the null hypothesis of no autocorrelation.
+-   The residuals seem to have a right skew. Autocorrelation is also
+    present in the residuals as seen in the ACF and supported by the
+    Ljung-Box Test’s p-value of 8.3e-05, which rejects the null
+    hypothesis of no autocorrelation.
 
 ``` r
 beer <- window(ausbeer, start=1992)
@@ -97,7 +108,7 @@ fc <- snaive(beer)
 checkresiduals(fc)
 ```
 
-![](Figures/Ch3/Ch3-Exercise_5-1.png)
+![](Figures/Ch3/Ch3-Exercise_5-1.png)<!-- -->
 
     ## 
     ##  Ljung-Box test
@@ -109,9 +120,14 @@ checkresiduals(fc)
 
 ### Exercise 6
 
-Repeat the exercise for the `WWWusage` and `bricksq` data. Use whichever of naive() or snaive() is more appropriate in each case.
+Repeat the exercise for the `WWWusage` and `bricksq` data. Use whichever
+of naive() or snaive() is more appropriate in each case.
 
-For `WWWusage` both the `naive` and `snaive` methods yield non-normal, autocorrelated errors. Both the ACF and Ljung-Box test reflect autocorrelation in the resiudals of both methods. Given the lack of a seasonal pattern in the series, the `naive` method should be choosen versus the `snaive` method.
+For `WWWusage` both the `naive` and `snaive` methods yield non-normal,
+autocorrelated errors. Both the ACF and Ljung-Box test reflect
+autocorrelation in the resiudals of both methods. Given the lack of a
+seasonal pattern in the series, the `naive` method should be choosen
+versus the `snaive` method.
 
 ``` r
 autoplot(naive(WWWusage))
@@ -139,7 +155,10 @@ checkresiduals(fc2)
 
 <img src="Figures/Ch3/Ch3-Exercise_6a-1.png" width="50%" /><img src="Figures/Ch3/Ch3-Exercise_6a-2.png" width="50%" /><img src="Figures/Ch3/Ch3-Exercise_6a-3.png" width="50%" /><img src="Figures/Ch3/Ch3-Exercise_6a-4.png" width="50%" />
 
-Similarly, for `bricksq` both the `naive` and `snaive` forecast methods result in residuals the are autocorrelated and non-normally distributed. The Ljung-Box test rejects non-autocorrelated residuals for both methods.
+Similarly, for `bricksq` both the `naive` and `snaive` forecast methods
+result in residuals the are autocorrelated and non-normally distributed.
+The Ljung-Box test rejects non-autocorrelated residuals for both
+methods.
 
 ``` r
 autoplot(naive(bricksq)) + 
@@ -175,23 +194,41 @@ Are the following statements true or false? Explain your answer.
 
 1.  Good forecast methods should have normally distributed residuals.
 
-    -   TRUE: good forecast methods should have normally distributed residuals, but this is not strictly required. Much more importantly, good forecasts should have uncorrelated residuals with mean 0.
+    -   TRUE: good forecast methods should have normally distributed
+        residuals, but this is not strictly required. Much more
+        importantly, good forecasts should have uncorrelated residuals
+        with mean 0.
 
 2.  A model with small residuals will give good forecasts.
 
-    -   FALSE: Residuals relate to fitted values, not forecast performance, and it may be the case that a particular model fits the insample data too well, resulting in "small" residuals. Nevertheless, out-of-sample performance from over-fit models may be poor. Good forecasts should produce mean-zero and uncorrelated errors.
+    -   FALSE: Residuals relate to fitted values, not forecast
+        performance, and it may be the case that a particular model fits
+        the insample data too well, resulting in “small” residuals.
+        Nevertheless, out-of-sample performance from over-fit models may
+        be poor. Good forecasts should produce mean-zero and
+        uncorrelated errors.
 
 3.  The best measure of forecast accuracy is MAPE.
 
-    -   FALSE: While the MAPE is a popular measure of forecast error, it has some disadvantages. Mainly, the MAPE struggles with when actuals are very small or even 0.
+    -   FALSE: While the MAPE is a popular measure of forecast error, it
+        has some disadvantages. Mainly, the MAPE struggles with when
+        actuals are very small or even 0.
 
-4.  If your model doesn’t forecast well, you should make it more complicated.
+4.  If your model doesn’t forecast well, you should make it more
+    complicated.
 
-    -   FALSE: more complicated methods do not necessarily improve forecasts. There is also a cost to more complex models: they are hard to interpret. Interpretibility may be an important factor when forming forecasts.
+    -   FALSE: more complicated methods do not necessarily improve
+        forecasts. There is also a cost to more complex models: they are
+        hard to interpret. Interpretibility may be an important factor
+        when forming forecasts.
 
-5.  Always choose the model with the best forecast accuracy as measured on the test set.
+5.  Always choose the model with the best forecast accuracy as measured
+    on the test set.
 
-    -   While out of sample performance is an important factor in choosing a model, it is not the *only* factor. Good models should also produce mean-zero and uncorrelated and homoskedastic errors.
+    -   While out of sample performance is an important factor in
+        choosing a model, it is not the *only* factor. Good models
+        should also produce mean-zero and uncorrelated and homoskedastic
+        errors.
 
 ### Exercise 8
 
@@ -206,7 +243,8 @@ myts.train <- window(myts, end = c(2010,12))
 myts.test <- window(myts, start = 2011)
 ```
 
--   Check that your data have been split appropriately by producing the following plot.
+-   Check that your data have been split appropriately by producing the
+    following plot.
 
 ``` r
 autoplot(myts) +
@@ -214,7 +252,7 @@ autoplot(myts) +
   autolayer(myts.test, series = "Test")
 ```
 
-![](Figures/Ch3/Ch3-unnamed-chunk-3-1.png)
+![](Figures/Ch3/Ch3-unnamed-chunk-3-1.png)<!-- -->
 
 -   Calculate forecasts using snaive applied to myts.train.
 
@@ -222,16 +260,17 @@ autoplot(myts) +
 fc <- snaive(myts.train)
 ```
 
--   Compare the accuracy of your forecasts against the actual values stored in myts.test.
+-   Compare the accuracy of your forecasts against the actual values
+    stored in myts.test.
 
 ``` r
 accuracy(fc,myts.test)
-##                     ME     RMSE      MAE       MPE      MAPE     MASE
-## Training set  7.772973 20.24576 15.95676  4.702754  8.109777 1.000000
-## Test set     55.300000 71.44309 55.78333 14.900996 15.082019 3.495907
-##                   ACF1 Theil's U
-## Training set 0.7385090        NA
-## Test set     0.5315239  1.297866
+##                     ME     RMSE      MAE       MPE      MAPE     MASE      ACF1
+## Training set  7.772973 20.24576 15.95676  4.702754  8.109777 1.000000 0.7385090
+## Test set     55.300000 71.44309 55.78333 14.900996 15.082019 3.495907 0.5315239
+##              Theil's U
+## Training set        NA
+## Test set      1.297866
 ```
 
 -   Check the residuals.
@@ -240,7 +279,7 @@ accuracy(fc,myts.test)
 checkresiduals(fc)
 ```
 
-![](Figures/Ch3/Ch3-unnamed-chunk-6-1.png)
+![](Figures/Ch3/Ch3-unnamed-chunk-6-1.png)<!-- -->
 
     ## 
     ##  Ljung-Box test
@@ -252,17 +291,25 @@ checkresiduals(fc)
 
 Do the residuals appear to be uncorrelated and normally distributed?
 
--   The residuals are highly autocorelated as seen in the ACF and in the Ljung-Box test. The residuals seem to follow a normal distribution, but also have slightly heavier tails and a higher peak around the mean, suggesting a t-distribution.
+-   The residuals are highly autocorelated as seen in the ACF and in the
+    Ljung-Box test. The residuals seem to follow a normal distribution,
+    but also have slightly heavier tails and a higher peak around the
+    mean, suggesting a t-distribution.
 
 How sensitive are the accuracy measures to the training/test split?
 
--   The accuracy measures are very sensitive to the training/test split. In sample performance is significantly better than out of sample.
+-   The accuracy measures are very sensitive to the training/test split.
+    In sample performance is significantly better than out of sample.
 
 ### Exercise 9
 
-`visnights` contains quarterly visitor nights (in millions) from 1998 to 2016 for twenty regions of Australia.
+`visnights` contains quarterly visitor nights (in millions) from 1998 to
+2016 for twenty regions of Australia.
 
--   Use `window()` to create three training sets for `visnights[,"QLDMetro"]`, omitting the last 1, 2 and 3 years; call these train1, train2, and train3, respectively. For example `train1 <- window(visnights[, "QLDMetro"], end = c(2015, 4))`.
+-   Use `window()` to create three training sets for
+    `visnights[,"QLDMetro"]`, omitting the last 1, 2 and 3 years; call
+    these train1, train2, and train3, respectively. For example
+    `train1 <- window(visnights[, "QLDMetro"], end = c(2015, 4))`.
 
 ``` r
 train1 <- window(visnights[, "QLDMetro"], start = 1998, end = c(2015,4))
@@ -270,7 +317,8 @@ train2 <- window(visnights[, "QLDMetro"], start = 1998, end = c(2014,4))
 train3 <- window(visnights[, "QLDMetro"], start = 1998, end = c(2013,4))
 ```
 
--   Compute one year of forecasts for each training set using the `snaive()` method. Call these `fc1`, `fc2` and `fc3`, respectively.
+-   Compute one year of forecasts for each training set using the
+    `snaive()` method. Call these `fc1`, `fc2` and `fc3`, respectively.
 
 ``` r
 fc1 <- snaive(train1, h = 4)
@@ -278,7 +326,8 @@ fc2 <- snaive(train2, h = 4)
 fc3 <- snaive(train3, h = 4)
 ```
 
--   Use `accuracy()` to compare the MAPE over the three test sets. Comment on these.
+-   Use `accuracy()` to compare the MAPE over the three test sets.
+    Comment on these.
 
 ``` r
 accuracy(fc1, visnights[, "QLDMetro"] )
@@ -314,10 +363,11 @@ Use the Dow Jones index (data set dowjones) to do the following:
 autoplot(dowjones)
 ```
 
-![](Figures/Ch3/Ch3-Exercise_10a-1.png)
+![](Figures/Ch3/Ch3-Exercise_10a-1.png)<!-- -->
 
 -   Produce forecasts using the drift method and plot them.
--   Show that the forecasts are identical to extending the line drawn between the first and last observations.
+-   Show that the forecasts are identical to extending the line drawn
+    between the first and last observations.
 
 ``` r
 fc <- rwf(dowjones, drift = TRUE, h = 10)
@@ -325,9 +375,8 @@ autoplot(fc)
 
 first <- dowjones[1]
 last<- dowjones[length(dowjones)]
-slope <- (last - first)/(length(dowjones) - 1)
-slope
-## [1] 0.1336364
+slope <- (last - first) / (length(dowjones) - 1)
+
 autoplot(dowjones) +
    geom_abline(slope = slope, intercept = first-slope, colour = "red", alpha = 0.8) +
    autolayer(rwf(dowjones, drift = TRUE), PI = FALSE)
@@ -335,9 +384,12 @@ autoplot(dowjones) +
 
 <img src="Figures/Ch3/Ch3-Exercise_10b-1.png" width="50%" /><img src="Figures/Ch3/Ch3-Exercise_10b-2.png" width="50%" />
 
--   Try using some of the other benchmark functions to forecast the same data set. Which do you think is best? Why?
+-   Try using some of the other benchmark functions to forecast the same
+    data set. Which do you think is best? Why?
 
-    -   The naive method seems to produce the best forecasts. The mean forecasts is simply too far off from the recent actuals to be reasonable. The drift method seems to aggresive.
+    -   The naive method seems to produce the best forecasts. The mean
+        forecasts is simply too far off from the recent actuals to be
+        reasonable. The drift method seems to aggresive.
 
 ``` r
 autoplot(dowjones) +
@@ -352,7 +404,7 @@ autoplot(dowjones) +
   guides(colour=guide_legend(title="Forecast"))
 ```
 
-![](Figures/Ch3/Ch3-Exercise_10c-1.png)
+![](Figures/Ch3/Ch3-Exercise_10c-1.png)<!-- -->
 
 ### Exercise 11
 
@@ -367,16 +419,21 @@ autoplot(diff(ibmclose))
 
 <img src="Figures/Ch3/Ch3-Exercise_11a-1.png" width="50%" /><img src="Figures/Ch3/Ch3-Exercise_11a-2.png" width="50%" />
 
--   Split the data into a training set of 300 observations and a test set of 69 observations.
+-   Split the data into a training set of 300 observations and a test
+    set of 69 observations.
 
 ``` r
 train <- window(ibmclose, start = 1, end = 300)
 test <- window(ibmclose, start = 301)
 ```
 
--   Try using various benchmark methods to forecast the training set and compare the results on the test set. Which method did best?
+-   Try using various benchmark methods to forecast the training set and
+    compare the results on the test set. Which method did best?
 
-    -   Both the `naive` and `rwf` methods lend good out of sample forecasts. However, `rwf` yields lower RMSE, MAE, and MAPE statistics, reflecting its superior out of sample performance. A look at the residuals mights also help choose the best model.
+    -   Both the `naive` and `rwf` methods lend good out of sample
+        forecasts. However, `rwf` yields lower RMSE, MAE, and MAPE
+        statistics, reflecting its superior out of sample performance. A
+        look at the residuals mights also help choose the best model.
 
 ``` r
 fc_naive <- naive(train, h = 69)
@@ -389,7 +446,7 @@ autoplot(ibmclose) +
    autolayer(fc_rwf, series = "drift", PI = FALSE)
 ```
 
-![](Figures/Ch3/Ch3-Exercise_11c-1.png)
+![](Figures/Ch3/Ch3-Exercise_11c-1.png)<!-- -->
 
 ``` r
 accuracy(fc_naive, test)
@@ -400,24 +457,30 @@ accuracy(fc_naive, test)
 ## Training set 0.1351052        NA
 ## Test set     0.9314689  2.973486
 accuracy(fc_mean, test)
-##                         ME      RMSE       MAE        MPE     MAPE
-## Training set  1.660438e-14  73.61532  58.72231  -2.642058 13.03019
-## Test set     -1.306180e+02 132.12557 130.61797 -35.478819 35.47882
-##                  MASE      ACF1 Theil's U
-## Training set 11.52098 0.9895779        NA
-## Test set     25.62649 0.9314689  19.05515
+##                         ME      RMSE       MAE        MPE     MAPE     MASE
+## Training set  1.660438e-14  73.61532  58.72231  -2.642058 13.03019 11.52098
+## Test set     -1.306180e+02 132.12557 130.61797 -35.478819 35.47882 25.62649
+##                   ACF1 Theil's U
+## Training set 0.9895779        NA
+## Test set     0.9314689  19.05515
 accuracy(fc_rwf, test)
-##                        ME      RMSE       MAE         MPE     MAPE
-## Training set 2.870480e-14  7.297409  5.127996 -0.02530123 1.121650
-## Test set     6.108138e+00 17.066963 13.974747  1.41920066 3.707888
-##                  MASE      ACF1 Theil's U
-## Training set 1.006083 0.1351052        NA
-## Test set     2.741765 0.9045875  2.361092
+##                        ME      RMSE       MAE         MPE     MAPE     MASE
+## Training set 2.870480e-14  7.297409  5.127996 -0.02530123 1.121650 1.006083
+## Test set     6.108138e+00 17.066963 13.974747  1.41920066 3.707888 2.741765
+##                   ACF1 Theil's U
+## Training set 0.1351052        NA
+## Test set     0.9045875  2.361092
 ```
 
--   Check the residuals of your preferred method. Do they resemble white noise?
+-   Check the residuals of your preferred method. Do they resemble white
+    noise?
 
-    -   None of the methods yield residuals resembiling white noise. For each mehtod, there is statistically significant autocorrelation in the resiudals. Furthermore, none of the residual distributins seem to fulfill normality (which is not required for good forecasts). However, the `naive` method's residuals come closest to the normal distribution.
+    -   None of the methods yield residuals resembiling white noise. For
+        each mehtod, there is statistically significant autocorrelation
+        in the resiudals. Furthermore, none of the residual distributins
+        seem to fulfill normality (which is not required for good
+        forecasts). However, the `naive` method’s residuals come closest
+        to the normal distribution.
 
 ``` r
 checkresiduals(fc_naive)
@@ -450,7 +513,8 @@ checkresiduals(fc_rwf)
 
 ### Exercise 12
 
-Consider the sales of new one-family houses in the USA, Jan 1973 – Nov 1995 (data set hsales).
+Consider the sales of new one-family houses in the USA, Jan 1973 – Nov
+1995 (data set hsales).
 
 -   Produce some plots of the data in order to become familiar with it.
 
@@ -463,16 +527,19 @@ ggsubseriesplot(hsales)
 
 <img src="Figures/Ch3/Ch3-Exercise_12a-1.png" width="33.3%" /><img src="Figures/Ch3/Ch3-Exercise_12a-2.png" width="33.3%" /><img src="Figures/Ch3/Ch3-Exercise_12a-3.png" width="33.3%" />
 
--   Split the hsales data set into a training set and a test set, where the test set is the last two years of data.
+-   Split the hsales data set into a training set and a test set, where
+    the test set is the last two years of data.
 
 ``` r
 train <- window(hsales, start = 1973, end = c(1993, 11)) 
 test <-  window(hsales, start = c(1993, 12)) 
 ```
 
--   Try using various benchmark methods to forecast the training set and compare the results on the test set. Which method did best?
+-   Try using various benchmark methods to forecast the training set and
+    compare the results on the test set. Which method did best?
 
-    -   the `snaive` methods produces the best out-of-sample forecasts according to the RMSE, MAE and MAPE.
+    -   the `snaive` methods produces the best out-of-sample forecasts
+        according to the RMSE, MAE and MAPE.
 
 ``` r
 fc_mean <- meanf(train, h = 24)
@@ -486,7 +553,7 @@ autoplot(hsales) +
    autolayer(fc_rwf, series = "drift", PI = FALSE)
 ```
 
-![](Figures/Ch3/Ch3-Exericse_12c-1.png)
+![](Figures/Ch3/Ch3-Exericse_12c-1.png)<!-- -->
 
 ``` r
 accuracy(fc_mean, test)
@@ -519,9 +586,15 @@ accuracy(fc_rwf, test)
 ## Test set     0.5378711  1.100276
 ```
 
--   Check the residuals of your preferred method. Do they resemble white noise?
+-   Check the residuals of your preferred method. Do they resemble white
+    noise?
 
-    -   None of the methods provide white noise residuals. Each method's residuals have some degree of statistically significant autocorrelation, suggesting that additional predictors can capture this information to provide better forcasts. Only the residuals of the Seasonal naive method seem to follow a normal distribution.
+    -   None of the methods provide white noise residuals. Each method’s
+        residuals have some degree of statistically significant
+        autocorrelation, suggesting that additional predictors can
+        capture this information to provide better forcasts. Only the
+        residuals of the Seasonal naive method seem to follow a normal
+        distribution.
 
 ``` r
 checkresiduals(fc_mean)
